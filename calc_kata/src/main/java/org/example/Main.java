@@ -1,5 +1,6 @@
 package org.example;
 
+import javax.print.attribute.standard.PresentationDirection;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -149,9 +150,8 @@ public class Main {
         char operator = 0;
         String result = "";
 
-
         List<Character> elements = new ArrayList<>();
-        for(char ch : inputText.trim().toCharArray()) {
+        for (char ch : inputText.trim().toCharArray()) {
             if (ch != ' ') {
                 elements.add(ch);
             }
@@ -179,39 +179,43 @@ public class Main {
                 ((Integer.parseInt(firstOpp) > 0) && Integer.parseInt(secondOpp) > 0)
         ) {
             switch (operator) {
-                case '+' :
+                case '+':
                     result = Integer.toString(Integer.parseInt(firstOpp) + Integer.parseInt(secondOpp));
                     break;
-                case '-' :
+                case '-':
                     result = Integer.toString(Integer.parseInt(firstOpp) - Integer.parseInt(secondOpp));
+                    if (Integer.parseInt(result) <= 0) {
+                        throw new Exception("Cannot represent negative or zero result in Roman numerals.");
+                    }
                     break;
-                case '*' :
+                case '*':
                     result = Integer.toString(Integer.parseInt(firstOpp) * Integer.parseInt(secondOpp));
                     break;
-                case '/' :
+                case '/':
                     result = Integer.toString(Integer.parseInt(firstOpp) / Integer.parseInt(secondOpp));
                     break;
             }
         } else if ((isInt(firstOpp) && !isInt(secondOpp)) || (!isInt(firstOpp) && isInt(secondOpp))) {
-            throw new Exception("you cant make expressions with various variables");
+            throw new Exception("You can't mix Arabic and Roman numerals in the expression.");
         } else if ((isInt(firstOpp) && isInt(secondOpp)) &&
-                ((Integer.parseInt(firstOpp) > 10 || Integer.parseInt(firstOpp) <= 0)) &&
-                (Integer.parseInt(secondOpp) > 10 || Integer.parseInt(secondOpp) <= 0)){
-            throw new Exception("you should to use numbers from 1 to 10");
-        }
-
-        else {
+                ((Integer.parseInt(firstOpp) < 1 || Integer.parseInt(firstOpp) > 10)) &&
+                (Integer.parseInt(secondOpp) < 1 || Integer.parseInt(secondOpp) > 10)) {
+            throw new Exception("You should use numbers from 1 to 10.");
+        } else {
             switch (operator) {
-                case '+' :
+                case '+':
                     result = convertToRome(convertToArabic(firstOpp) + convertToArabic(secondOpp));
                     break;
-                case '-' :
+                case '-':
                     result = convertToRome(convertToArabic(firstOpp) - convertToArabic(secondOpp));
+                    if (result.equals("0") || result.startsWith("-")) {
+                        throw new Exception("Cannot represent negative or zero result in Roman numerals.");
+                    }
                     break;
-                case '*' :
+                case '*':
                     result = convertToRome(convertToArabic(firstOpp) * convertToArabic(secondOpp));
                     break;
-                case '/' :
+                case '/':
                     result = convertToRome(convertToArabic(firstOpp) / convertToArabic(secondOpp));
                     break;
             }
