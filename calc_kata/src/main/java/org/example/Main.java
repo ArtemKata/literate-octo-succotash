@@ -1,6 +1,4 @@
-package org.example;
-
-import java.util.HashMap;
+package org.example;import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -84,13 +82,14 @@ class Main {
     }
 
     private static boolean isRomanNumeral(String numeral) {
-        return numeral.matches("^(I | II | III | IV | V | VI | VII | VIII | IX | X)$");
+        return numeral.matches("^(I|II|III|IV|V|VI|VII|VIII|IX|X)$");
     }
 
     private static String toRoman(int number) throws Exception {
         if (number < 1) {
             throw new Exception("Результат не может быть меньше 1");
         }
+
         StringBuilder roman = new StringBuilder();
         for (Map.Entry<String, Integer> entry : romanNumbers.entrySet()) {
             while (number >= entry.getValue()) {
